@@ -25,12 +25,10 @@
 #  CH7465VF LOGGER
 # ================================================================
 #  Autor:        Kevin Neumann
-#  Version:      1.0.1
+#  Version:      1.0.2
 #  Beschreibung: Liest Event-Logs eines CH7465VF Kabelmodems aus
 #                und speichert sie optional als CSV oder als
 #                Textdatei.
-#                Geht davon aus, dass der Router unter der IP
-#                192.168.0.1 existiert.
 #
 #  Nutzung:
 #      python3 CH7465VF_Logger.py
@@ -39,6 +37,7 @@
 #      3 für Logging in eine CSV-Datei über
 #        X Minuten in Y Sekunden Interval
 #
+#      Router IP: IP-Adresse des Routers (Enter für 192.168.0.1)
 #      Router Username: Benutzername des Routers
 #      Router Passwort: Passwort des Routers
 #
@@ -48,6 +47,7 @@
 #      2026-03-06
 #
 #  Changelog:
+#      v1.0.2 - IP-Adresse wird abgefragt
 #      v1.0.1 - Beschreibung und Nutzung angepasst
 #      v1.0  - Initiale Version / CSV Logging hinzugefügt
 # ================================================================
@@ -63,8 +63,9 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 import requests
+from urllib.parse import urlparse
 
-ROUTER = "http://192.168.0.1"
+DEFAULT_ROUTER = "http://192.168.0.1"
 LOG_TIME_OFFSET_HOURS = 1
 RECENT_EVENT_WINDOW_MINUTES = 15
 SEEN_EVENTS_FILE = Path("router_logs/seen_events.txt")
@@ -97,7 +98,8 @@ class CH7465VF:
         })
 
     def _set_cookie(self, name: str, value: str) -> None:
-        self.session.cookies.set(name, value, domain="192.168.0.1", path="/")
+        host = urlparse(self.config.router).hostname
+        self.session.cookies.set(name, value, domain=host, path="/")
 
     def login(self) -> None:
         r = self.session.get(f"{self.config.router}/common_page/login.html", timeout=10)
@@ -470,11 +472,23 @@ def main():
 
     choice = input("Auswahl (1/2/3): ").strip()
 
+    router_ip = input(f"Router IP (Default {DEFAULT_ROUTER}): ").strip()
+
+    if not router_ip:
+        router = DEFAULT_ROUTER
+    else:
+        if not router_ip.startswith("http"):
+            router = f"http://{router_ip}"
+        else:
+            router = router_ip
+
     username = input("Router Username: ").strip()
     password = input("Router Passwort: ").strip()
 
+    print(f"\nVerbinde mit Router: {router}\n")
+
     config = RouterConfig(
-        router="http://192.168.0.1",
+        router=router,
         username=username,
         password=password,
         output_dir=Path("router_logs"),
