@@ -25,21 +25,31 @@
 #  CH7465VF LOGGER
 # ================================================================
 #  Autor:        Kevin Neumann
-#  Version:      1.0
+#  Version:      1.0.1
 #  Beschreibung: Liest Event-Logs eines CH7465VF Kabelmodems aus
-#                und speichert sie optional als CSV oder zeigt
-#                sie im Terminal an.
+#                und speichert sie optional als CSV oder als
+#                Textdatei.
+#                Geht davon aus, dass der Router unter der IP
+#                192.168.0.1 existiert.
 #
 #  Nutzung:
-#      python router_logger.py snapshot --username USER --password PASS
-#      python router_logger.py watch-text --minutes 15 --interval 30
-#      python router_logger.py watch-csv --minutes 20 --interval 10
+#      python3 CH7465VF_Logger.py
+#      1 für einen Snapshot
+#      2 für mehrere Snapshots über X Minuten in Y Sekunden Interval
+#      3 für Logging in eine CSV-Datei über
+#        X Minuten in Y Sekunden Interval
 #
+#      Router Username: Benutzername des Routers
+#      Router Passwort: Passwort des Routers
+#
+#  Erstellt:
+#      2026-03-06
 #  Letzte Änderung:
-#      2026-03-06  Initiale Version / CSV Logging hinzugefügt
+#      2026-03-06
 #
 #  Changelog:
-#      v1.0  - Erste funktionale Version
+#      v1.0.1 - Beschreibung und Nutzung angepasst
+#      v1.0  - Initiale Version / CSV Logging hinzugefügt
 # ================================================================
 
 import csv
@@ -53,7 +63,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 import requests
-
 
 ROUTER = "http://192.168.0.1"
 LOG_TIME_OFFSET_HOURS = 1
