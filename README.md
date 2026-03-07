@@ -1,5 +1,5 @@
 # CH7465VF Logger
-Ein kleines Python-Tool zum Extrahieren von Diagnosedaten und Ereignisprotokollen aus dem Technicolor **CH7465VF** Kabelmodem/Router.
+Ein kleines Python-Tool zum Extrahieren von Diagnosedaten und Ereignisprotokollen aus dem Compal **CH7465VF** Kabelmodem/Router, welcher bei UnityMedia/Vodafone an Kunden gegeben wurde.
 Das Tool kann Momentaufnahmen des Modemstatus erstellen, Protokolle über einen bestimmten Zeitraum überwachen und Diagnosedaten zur späteren Analyse in das CSV-Format exportieren.
 
 ---
