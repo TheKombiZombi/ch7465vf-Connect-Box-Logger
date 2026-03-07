@@ -15,6 +15,11 @@ Das Tool kann Momentaufnahmen des Modemstatus erstellen, Protokolle über einen 
 
 ---
 
+## To-Do
+- Multi-Language Support
+- Flags für Shell Usage
+- Potenziell auf python-connect-box aufbauen
+
 ## Anforderungen
 
 - Python 3.10+
@@ -80,10 +85,12 @@ Die Snapshot-Ausgabe zeigt einen einfachen Status an: OK / WARN / BAD
 
 ## Getestete Hardware
 
-Technicolor **CH7465VF**
+- Compal **CH7465VF**
 
 Das Skript basiert auf der internen XML-Schnittstelle der Router-Firmware.
 Die Kompatibilität mit anderen Geräten kann nicht garantiert werden.
+Ich schaue mal bei anderen Tools, ob die Schnittstellen bei anderen Kunden
+von Compal identisch sind und passe die Liste gegebenenfalls an.
 
 ---
 
